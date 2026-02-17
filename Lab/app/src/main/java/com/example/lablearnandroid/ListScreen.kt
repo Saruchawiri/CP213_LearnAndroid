@@ -1,9 +1,5 @@
 package com.example.lablearnandroid
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,23 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-
-class MainActivity2 : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            MaterialTheme {
-                val viewModel: PokemonViewModel = viewModel()
-                PokemonScreen(viewModel)
-            }
-        }
-    }
-}
 
 @Composable
-fun PokemonScreen(viewModel: PokemonViewModel) {
+fun ListScreen(viewModel: PokemonViewModel) {
 
     val pokemonList by viewModel.pokemonList.collectAsState()
 
@@ -45,9 +27,19 @@ fun PokemonScreen(viewModel: PokemonViewModel) {
                 .padding(padding)
         ) {
             items(pokemonList) { entry ->
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = "#${entry.entry_number}")
-                    Text(text = entry.pokemon_species.name)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "#${entry.entry_number}",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    Text(
+                        text = entry.pokemon_species.name,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
                 }
             }
         }

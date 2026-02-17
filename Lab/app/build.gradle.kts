@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.lablearnandroid"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.lablearnandroid"
-        minSdk = 30
-        targetSdk = 34
+        minSdk = 26
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -41,6 +41,15 @@ android {
 
 dependencies {
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    // Retrofit สำหรับคุยกับ Server
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Converter สำหรับแปลง JSON เป็น Data Class (Gson)
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Lifecycle & ViewModel สำหรับ Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -56,5 +65,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("io.coil-kt:coil-compose:2.5.0") // Check for the latest version
 }
