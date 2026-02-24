@@ -110,3 +110,5 @@ class MainActivity : ComponentActivity() {
         RPGCardView()
     }
 }
+
+//check in 24 feb
