@@ -1,89 +1,89 @@
-#Project Proposal
-#Mobile Application: Whatever in BKK
+# Project Proposal
+# Mobile Application: Whatever in BKK
 
-#Step 1: Project Overview
-##1. ชื่อโครงการ
+# Step 1: Project Overview
+## 1. ชื่อโครงการ
 Whatever in BKK
 แอปพลิเคชันช่วยตัดสินใจเรื่องเล็ก ๆ ในชีวิตประจำวัน
-##2. ที่มาและความสำคัญของโครงการ
+## 2. ที่มาและความสำคัญของโครงการ
 ในชีวิตประจำวัน ผู้คนมักพบกับปัญหาในการตัดสินใจเรื่องง่าย ๆ เช่น
 วันนี้จะกินอะไรดี
 จะไปไหนดี
 ควรเริ่มทำงานชิ้นไหนก่อน
-###แม้จะเป็นเรื่องเล็ก แต่กลับใช้เวลาในการตัดสินใจค่อนข้างนาน โดยเฉพาะเมื่ออยู่เป็นกลุ่ม ทำให้เกิดความล่าช้าและเสียเวลาโดยไม่จำเป็น
+### แม้จะเป็นเรื่องเล็ก แต่กลับใช้เวลาในการตัดสินใจค่อนข้างนาน โดยเฉพาะเมื่ออยู่เป็นกลุ่ม ทำให้เกิดความล่าช้าและเสียเวลาโดยไม่จำเป็น
 ดังนั้น แอป Whatever in BKK จึงถูกพัฒนาขึ้นเพื่อช่วยให้การตัดสินใจเป็นเรื่องง่ายและรวดเร็ว โดยให้ผู้ใช้สามารถเพิ่มตัวเลือกของตนเอง และให้ระบบสุ่มคำตอบทันที พร้อมเพิ่มความสนุกผ่านการใช้งาน
-##3. วัตถุประสงค์
+## 3. วัตถุประสงค์
 เพื่อพัฒนา Mobile Application บน Android สำหรับช่วยตัดสินใจในชีวิตประจำวัน
 เพื่อฝึกพัฒนาแอปด้วย Kotlin และ Jetpack Compose
 เพื่อฝึกการออกแบบระบบด้วย MVVM Architecture เบื้องต้น
 เพื่อเรียนรู้การจัดเก็บข้อมูลในเครื่อง (Local Storage)
-##4. กลุ่มเป้าหมาย
+## 4. กลุ่มเป้าหมาย
 นักศึกษา
 คนวัยทำงาน (อายุ 18–30 ปี)
 กลุ่มเพื่อนที่ตัดสินใจยาก
 ผู้ที่ต้องการแอปใช้งานง่าย รวดเร็ว และไม่ซับซ้อน
 
-#Step 2: Tech Stack
-##2.1 Platform
+# Step 2: Tech Stack
+## 2.1 Platform
 พัฒนาเป็น Android Application
 ใช้ Android Studio
 ใช้ภาษา Kotlin
-##2.2 UI Development
+## 2.2 UI Development
 ใช้ Jetpack Compose สำหรับออกแบบ UI
 ออกแบบให้ เรียบง่าย (Simple), ใช้งานง่าย (User-Friendly)
 ใช้แนวคิด State-based UI (Reactive UI)
-##2.3 Architecture
+## 2.3 Architecture
 ใช้ MVVM (Model – View – ViewModel) เบื้องต้น
 Model → จัดการข้อมูล (Options, History)
 View (Compose UI) → แสดงผลหน้าจอ
 ViewModel → ควบคุม Logic เช่น การสุ่ม และจัดการ State
-##2.4 Navigation
+## 2.4 Navigation
 ใช้ Multi-Activity
 ใช้ startActivity() สำหรับเปลี่ยนหน้าจอ
 เพื่อฝึกการทำงานของ Android Activity Lifecycle
 
-##หน้าจอหลัก:
+## หน้าจอหลัก:
 MainActivity → เพิ่มตัวเลือก
 ResultActivity → แสดงผลลัพธ์
 HistoryActivity → แสดงประวัติ
 
-##2.5 Database & Storage
+## 2.5 Database & Storage
 ใช้ SQLite ผ่าน Room Database สำหรับเก็บข้อมูล History
 รองรับการใช้งานแบบ Offline
 ทางเลือกสำรอง:
 ใช้ SharedPreferences สำหรับเก็บข้อมูลแบบพื้นฐาน
 (กรณีไม่สามารถใช้ Room ได้)
-##2.6 Offline Capability
+## 2.6 Offline Capability
 ฟีเจอร์หลักทั้งหมดสามารถใช้งานได้โดย ไม่ต้องเชื่อมต่ออินเทอร์เน็ต
 ข้อมูลทั้งหมดถูกจัดเก็บในเครื่องผู้ใช้
 
-#Step 3: System Design
-##3.1 แนวคิดการออกแบบ
+# Step 3: System Design
+## 3.1 แนวคิดการออกแบบ
 เรียบง่าย (Minimal Design)
 ใช้งานสะดวก (User-Friendly)
 มีสีสันเล็กน้อยเพื่อเพิ่มความน่าสนใจ
-##3.2 โครงสร้างหน้าจอ (Screen Structure)
-###1. Main Screen (MainActivity)
+## 3.2 โครงสร้างหน้าจอ (Screen Structure)
+### 1. Main Screen (MainActivity)
 ช่องกรอกตัวเลือก
 ปุ่ม Add
 แสดงรายการตัวเลือก
 ปุ่ม Decide
-###2. Result Screen (ResultActivity)
+### 2. Result Screen (ResultActivity)
 แสดงผลลัพธ์ที่สุ่มได้
 มี Animation (เช่น หมุน / fade)
 ปุ่ม Try Again
 ปุ่ม Back
-###3. History Screen (HistoryActivity)
+### 3. History Screen (HistoryActivity)
 แสดงรายการผลลัพธ์ย้อนหลัง
 ปุ่ม Clear History
-##3.3 การทำงานของระบบ (System Flow)
+## 3.3 การทำงานของระบบ (System Flow)
 ผู้ใช้เพิ่มตัวเลือก (อย่างน้อย 2 ตัวเลือก)
 กดปุ่ม Decide
 ระบบสุ่มเลือก 1 ตัวเลือก
 แสดงผลลัพธ์บนหน้าจอ Result
 บันทึกผลลง Histor
 ผู้ใช้สามารถดูย้อนหลังหรือเริ่มใหม่ได้
-##3.4 โครงสร้างข้อมูล (Data Structure)
+## 3.4 โครงสร้างข้อมูล (Data Structure)
 ###Option
 -id
 -name
@@ -92,31 +92,31 @@ HistoryActivity → แสดงประวัติ
 -result
 -timestamp
 
-#Step 4: Functional Requirements (MVP)
-##4.1 Add Options
+# Step 4: Functional Requirements (MVP)
+## 4.1 Add Options
 ผู้ใช้สามารถเพิ่มตัวเลือกได้
 สามารถลบตัวเลือกได้
 ต้องมีอย่างน้อย 2 ตัวเลือกก่อนสุ่ม
-##4.2 Random Decision
+# #4.2 Random Decision
 มีปุ่ม “Decide”
 ระบบสุ่มเลือก 1 ตัวเลือก
 แสดงผลลัพธ์ชัดเจน
 มี Animation เพิ่มความน่าสนใจ
-##4.3 History
+## 4.3 History
 บันทึกผลลัพธ์ที่สุ่มได้
 แสดงรายการย้อนหลัง
 สามารถล้างประวัติได้
-##4.4 Offline Usage
+## 4.4 Offline Usage
 ใช้งานได้โดยไม่ต้องใช้อินเทอร์เน็ต
 ข้อมูลถูกเก็บในเครื่อง
 
-#Step 5: Non-Functional Requirements
+# Step 5: Non-Functional Requirements
 แอปต้องใช้งานง่าย ไม่ซับซ้อน
 ตอบสนองรวดเร็ว (Fast Response)
 รองรับการใช้งานแบบ Offline
 UI ต้องอ่านง่ายและเข้าใจทันที
 
-#Step 6: Expected Outcomes
+# Step 6: Expected Outcomes
 ได้แอป Android ที่ใช้งานได้จริง
 เข้าใจการพัฒนาแอปด้วย Jetpack Compose
 เข้าใจ MVVM Architecture เบื้องต้น
