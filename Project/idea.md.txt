@@ -1,251 +1,248 @@
-## Project Proposal  
-## Mobile Application: Whatever in BKK  
+Project Proposal
 
----
+Mobile Application: Decidr
 
-## Step 1: Project Overview  
+⸻
 
-### 1. ชื่อโครงการ  
-**Whatever in BKK**  
-แอปพลิเคชันช่วยตัดสินใจเรื่องเล็ก ๆ ในชีวิตประจำวัน  
+Step 1: Project Overview
 
----
+1. ชื่อโครงการ
 
-### 2. ที่มาและความสำคัญของโครงการ  
-ในชีวิตประจำวัน ผู้คนมักพบกับปัญหาในการตัดสินใจเรื่องง่าย ๆ เช่น  
+Decidr
+แอปพลิเคชันช่วยตัดสินใจด้วย AI และการวิเคราะห์เชิงเหตุผล
 
-- วันนี้จะกินอะไรดี  
-- จะไปไหนดี  
-- ควรเริ่มทำงานชิ้นไหนก่อน  
+⸻
 
-แม้จะเป็นเรื่องเล็ก แต่กลับใช้เวลาในการตัดสินใจค่อนข้างนาน โดยเฉพาะเมื่ออยู่เป็นกลุ่ม ทำให้เกิดความล่าช้าและเสียเวลาโดยไม่จำเป็น  
+2. ที่มาและความสำคัญของโครงการ
 
-ดังนั้น แอป **Whatever in BKK** จึงถูกพัฒนาขึ้นเพื่อช่วยให้การตัดสินใจเป็นเรื่องง่ายและรวดเร็ว โดยให้ผู้ใช้สามารถเพิ่มตัวเลือกของตนเอง และให้ระบบสุ่มคำตอบทันที  
+ในชีวิตประจำวัน ผู้คนมักต้องเผชิญกับการตัดสินใจในหลายรูปแบบ เช่น
+	•	ควรซื้อสิ่งนี้หรือไม่
+	•	ควรเลือกทำงานชิ้นไหนก่อน
+	•	ควรเลือกตัวเลือกใดระหว่างหลายทางเลือก
 
-นอกจากนี้ แอปยังเพิ่มฟีเจอร์ **Mood-based Random (สุ่มตามอารมณ์)** เพื่อช่วยให้การตัดสินใจมีความเหมาะสมกับความรู้สึกของผู้ใช้มากยิ่งขึ้น เช่น  
+แม้บางการตัดสินใจจะดูไม่ซับซ้อน แต่เมื่อมีหลายปัจจัยเข้ามาเกี่ยวข้อง เช่น ราคา เวลา ความคุ้มค่า หรือความรู้สึกส่วนตัว มักทำให้ผู้ใช้เกิดความลังเลและใช้เวลานานในการตัดสินใจ
 
-- ❤️ Romance → ร้านอาหารบรรยากาศดี / ดินเนอร์ / วิวสวย  
-- 🌿 Relax → คาเฟ่เงียบ ๆ / ธรรมชาติ / นั่งชิล  
-- 🎉 Fun → ร้านคึกคัก / แฮงเอาท์ / กิจกรรมสนุก  
-- 😔 Depressed → ร้านฮีลใจ / ของหวาน / สถานที่สงบ  
+แอป Decidr จึงถูกพัฒนาขึ้นเพื่อช่วยให้ผู้ใช้สามารถตัดสินใจได้อย่างมีเหตุผล โดยใช้แนวคิด AI-assisted decision making ร่วมกับ การคำนวณแบบถ่วงน้ำหนัก (Weighted Scoring System)
 
-ซึ่งช่วยเพิ่มประสบการณ์การใช้งานให้มีความฉลาดและตรงใจผู้ใช้มากขึ้น  
+ระบบจะช่วย:
+	•	วิเคราะห์ข้อดี–ข้อเสียของแต่ละตัวเลือก
+	•	คำนวณคะแนนตามปัจจัยที่ผู้ใช้กำหนด
+	•	แนะนำตัวเลือกที่เหมาะสม พร้อมเหตุผลประกอบ
 
----
+นอกจากนี้ แอปยังมีฟีเจอร์
+	•	Scenario Simulation (จำลองผลลัพธ์ในอนาคต)
+	•	AI Chat Assistant (ผู้ช่วยถาม–ตอบ)
 
-### 3. วัตถุประสงค์  
+ทำให้ Decidr เป็นมากกว่าแอปทั่วไป แต่เป็น Intelligent Decision Support System ที่ช่วยให้การตัดสินใจมีประสิทธิภาพและแม่นยำมากขึ้น
 
-- เพื่อพัฒนา Mobile Application บน Android สำหรับช่วยตัดสินใจในชีวิตประจำวัน  
-- เพื่อฝึกพัฒนาแอปด้วย Kotlin และ Jetpack Compose  
-- เพื่อฝึกการออกแบบระบบด้วย MVVM Architecture เบื้องต้น  
-- เพื่อเรียนรู้การจัดเก็บข้อมูลในเครื่อง (Local Storage)  
-- เพื่อพัฒนาฟีเจอร์การสุ่มแบบอิงอารมณ์ (Mood-based Recommendation)  
+⸻
 
----
+3. วัตถุประสงค์
+	•	เพื่อพัฒนา Mobile Application บน Android สำหรับช่วยตัดสินใจด้วย AI
+	•	เพื่อฝึกการพัฒนาแอปด้วย Kotlin และ Jetpack Compose
+	•	เพื่อเรียนรู้และประยุกต์ใช้ MVVM Architecture
+	•	เพื่อออกแบบระบบ Decision Engine ด้วย Weighted Scoring
+	•	เพื่อเชื่อมต่อ AI API สำหรับวิเคราะห์และให้คำแนะนำ
+	•	เพื่อพัฒนา Explainable AI ที่สามารถอธิบายเหตุผลได้
 
-### 4. กลุ่มเป้าหมาย  
+⸻
 
-- นักศึกษา  
-- คนวัยทำงาน (อายุ 18–30 ปี)  
-- กลุ่มเพื่อนที่ตัดสินใจยาก  
-- ผู้ที่ต้องการแอปใช้งานง่าย รวดเร็ว และไม่ซับซ้อน  
+4. กลุ่มเป้าหมาย
+	•	นักศึกษา
+	•	คนวัยทำงาน (อายุ 18–35 ปี)
+	•	ผู้ที่ต้องตัดสินใจบ่อย
+	•	ผู้ที่ต้องการเครื่องมือช่วยคิดอย่างมีเหตุผล
 
----
+⸻
 
-## Step 2: Tech Stack  
+Step 2: Tech Stack
 
-### 2.1 Platform  
+2.1 Platform
+	•	Android Application
+	•	Android Studio
+	•	Kotlin
 
-- Android Application  
-- Android Studio  
-- Kotlin  
+⸻
 
----
+2.2 UI Development
+	•	Jetpack Compose
+	•	Modern / Clean UI
+	•	State-based UI
 
-### 2.2 UI Development  
+⸻
 
-- Jetpack Compose  
-- Simple / Clean UI  
-- State-based (Reactive UI)  
+2.3 Architecture
+	•	MVVM (Model – View – ViewModel)
 
----
+⸻
 
-### 2.3 Architecture  
+2.4 Navigation
+	•	Multi-Screen Navigation
 
-- MVVM (Model – View – ViewModel)  
-  - Model → จัดการข้อมูล  
-  - View (Compose UI) → แสดงผล  
-  - ViewModel → ควบคุม Logic และ State  
+Screens:
+	•	MainScreen
+	•	AnalysisScreen
+	•	ResultScreen
+	•	HistoryScreen
+	•	ChatScreen
 
----
+⸻
 
-### 2.4 Navigation  
+2.5 Database & Storage
+	•	Room Database (SQLite)
+	•	เก็บ Decision / Options / Factors / History
 
-- Multi-Activity  
-- ใช้ `startActivity()`  
-- เพื่อฝึก Android Activity Lifecycle  
+⸻
 
-**Screens:**  
-- MainActivity → เพิ่มตัวเลือก  
-- ResultActivity → แสดงผลลัพธ์  
-- HistoryActivity → ประวัติ  
+2.6 External Services
+	•	AI API (เช่น OpenAI)
 
----
+⸻
 
-### 2.5 Database & Storage  
+2.7 Offline Capability
+	•	ใช้งานพื้นฐานได้แบบ Offline
+	•	AI ใช้ Online
 
-- Room Database (SQLite) → เก็บ History  
-- Offline Ready  
+⸻
 
-**Fallback:**  
-- SharedPreferences (กรณีฉุกเฉิน)  
+Step 3: System Design
 
----
+3.1 แนวคิดการออกแบบ
+	•	Minimal
+	•	User-Friendly
+	•	Data-driven
+	•	Explainable
 
-### 2.6 Offline Capability  
+⸻
 
-- ใช้งานได้โดยไม่ต้องใช้อินเทอร์เน็ต  
-- เก็บข้อมูลในเครื่องผู้ใช้  
+3.2 Screen Structure
 
----
+🔹 Main Screen
+	•	Input คำถาม
+	•	เพิ่มตัวเลือก
+	•	เพิ่มปัจจัย
+	•	กำหนด Weight
+	•	ปุ่ม Analyze
 
-## Step 3: System Design  
+⸻
 
-### 3.1 แนวคิดการออกแบบ  
+🔹 Analysis Screen
+	•	Loading
+	•	AI Processing
 
-- Minimal  
-- User-Friendly  
-- รองรับการเลือก “Mood” ก่อนสุ่ม  
+⸻
 
----
+🔹 Result Screen
+	•	คะแนนแต่ละตัวเลือก
+	•	Pros / Cons
+	•	Recommendation
+	•	Confidence Score
 
-### 3.2 Screen Structure  
+⸻
 
-**Main Screen (MainActivity)**  
+🔹 History Screen
+	•	รายการย้อนหลัง
+	•	แสดงผลลัพธ์ + คะแนน
 
-- Input ตัวเลือก  
-- ปุ่ม Add  
-- List ตัวเลือก  
-- Mood Selector (Chips / Buttons):  
-  - ❤️ Romance  
-  - 🌿 Relax  
-  - 🎉 Fun  
-  - 😔 Depressed  
-- ปุ่ม Decide  
+⸻
 
----
+🔹 Chat Screen
+	•	AI ตอบคำถามเพิ่มเติม
 
-**Result Screen (ResultActivity)**  
+⸻
 
-- แสดงผลลัพธ์  
-- แสดง Mood ที่เลือก  
-- Animation  
-- ปุ่ม Try Again / Back  
+3.3 System Flow
+	1.	ผู้ใช้ใส่คำถาม
+	2.	เพิ่มตัวเลือก (≥ 2)
+	3.	เพิ่มปัจจัย + weight
+	4.	กด Analyze
+	5.	ระบบคำนวณคะแนน
+	6.	AI วิเคราะห์
+	7.	แสดงผลลัพธ์
+	8.	บันทึก History
+	9.	ผู้ใช้ถามต่อได้
 
----
+⸻
 
-**History Screen (HistoryActivity)**  
+3.4 Data Structure
 
-- รายการย้อนหลัง  
-- แสดง “ผลลัพธ์ + Mood”  
-- ปุ่ม Clear History  
+Decision
+	•	id
+	•	title
+	•	created_at
 
----
+Option
+	•	id
+	•	decision_id
+	•	name
+	•	score
 
-### 3.3 System Flow  
+Factor
+	•	id
+	•	decision_id
+	•	name
+	•	weight
 
-1. ผู้ใช้เพิ่มตัวเลือก (≥ 2)  
-2. ผู้ใช้เลือก Mood (optional)  
-3. กด Decide  
-4. ระบบสุ่มโดยอิง Mood  
-5. แสดงผลลัพธ์  
-6. บันทึก History (พร้อม Mood)  
-7. ดูย้อนหลัง / เริ่มใหม่  
+History
+	•	id
+	•	decision_id
+	•	result
+	•	confidence
+	•	timestamp
 
----
+⸻
 
-### 3.4 Data Structure  
+Step 4: Functional Requirements (MVP)
 
-**Option**  
+4.1 Create Decision
+	•	เพิ่มคำถาม
+	•	เพิ่มตัวเลือก
+	•	เพิ่มปัจจัย
+	•	กำหนด weight
 
-- id  
-- name  
-- moodTag (Romance / Relax / Fun / Depressed)  
+⸻
 
-**History**  
+4.2 Decision Analysis 
+	•	คำนวณคะแนน
+	•	วิเคราะห์ข้อดี–ข้อเสีย
+	•	แสดง Recommendation
 
-- id  
-- result  
-- mood  
-- timestamp  
+⸻
 
----
+4.3 AI Reasoning 
+	•	วิเคราะห์ข้อความ
+	•	อธิบายเหตุผล
 
-## Step 4: Functional Requirements (MVP)  
+⸻
 
-### 4.1 Add Options  
+4.4 Scenario Simulation 
+	•	จำลองผลลัพธ์ของแต่ละตัวเลือก
 
-- เพิ่มตัวเลือก  
-- ลบตัวเลือก  
-- ต้องมี ≥ 2 ตัวเลือก  
+⸻
 
----
+4.5 History
+	•	บันทึกผล
+	•	ดูย้อนหลัง
 
-### 4.2 Random Decision  
+⸻
 
-- ปุ่ม Decide  
-- สุ่ม 1 ตัวเลือก  
-- รองรับการสุ่มตาม Mood  
-- แสดงผลชัดเจน  
-- มี Animation  
+4.6 Chat
+	•	ถาม–ตอบกับ AI
 
----
+⸻
 
-### 4.3 Mood-based Random ⭐  
+Step 5: Non-Functional Requirements
+	•	ใช้งานง่าย
+	•	ตอบสนองเร็ว
+	•	UI ทันสมัย
+	•	เชื่อถือได้
+	•	รองรับการขยายระบบ
 
-- ผู้ใช้สามารถเลือก Mood ก่อนสุ่ม  
-- ระบบจะเลือกเฉพาะตัวเลือกที่ตรงกับ Mood  
-- หากไม่มี Mood → สุ่มปกติ  
-- รองรับ 4 Mood: Romance, Relax, Fun, Depressed  
+⸻
 
----
-
-### 4.4 History  
-
-- บันทึกผลลัพธ์ + Mood  
-- แสดงย้อนหลัง  
-- ล้างข้อมูลได้  
-
----
-
-### 4.5 Offline Usage  
-
-- ใช้งานได้โดยไม่ต้องใช้อินเทอร์เน็ต  
-- เก็บข้อมูลในเครื่อง  
-
----
-
-## Step 5: Non-Functional Requirements  
-
-- ใช้งานง่าย  
-- ตอบสนองเร็ว  
-- Offline ได้  
-- UI อ่านง่าย  
-- รองรับการใช้งานแบบ Personal มากขึ้น  
-
----
-
-## Step 6: Expected Outcomes  
-
-- ได้แอป Android ใช้งานจริง  
-- เข้าใจ Jetpack Compose  
-- เข้าใจ MVVM  
-- ใช้ Local Storage ได้  
-- ได้เรียนรู้การออกแบบฟีเจอร์ที่ตอบโจทย์ผู้ใช้มากขึ้น  
-
----
-
-## 💡 Highlight Idea  
-
-> แอปนี้ไม่ใช่แค่ Random ธรรมดา แต่เป็น **Emotion-driven Decision Making**  
-> ที่ช่วยให้การตัดสินใจ “ตรงกับอารมณ์ (Romance / Relax / Fun / Depressed)” ของผู้ใช้มากขึ้น  
+Step 6: Expected Outcomes
+	•	ได้แอป Android ที่ช่วยตัดสินใจได้จริง
+	•	เข้าใจ Jetpack Compose และ MVVM
+	•	ได้ฝึกออกแบบ Decision Engine
+	•	ได้เรียนรู้การใช้ AI API
+	•	ได้โปรเจกต์ Portfolio ระดับสูง
