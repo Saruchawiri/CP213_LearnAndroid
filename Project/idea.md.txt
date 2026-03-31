@@ -1,174 +1,168 @@
 Project Proposal
 
-Mobile Application: Decidr
+Mobile Application: Decidr by sarucha
 
 ⸻
 
-Step 1: Project Overview
+🧸 🐶 Branding Concept
+	•	App Name: Decidr
+	•	Creator: sarucha
+	•	Mascot: Jelly (Golden Retriever 🐶)
+	•	Concept:
+👉 “เพื่อนอัจฉริยะที่ช่วยคุณตัดสินใจ”
+
+⸻
+
+🧠 Step 1: Project Overview
 
 1. ชื่อโครงการ
 
-Decidr
-แอปพลิเคชันช่วยตัดสินใจด้วย AI และการวิเคราะห์เชิงเหตุผล
+Decidr by sarucha
+AI-powered Decision Support Mobile Application
 
 ⸻
 
 2. ที่มาและความสำคัญของโครงการ
 
-ในชีวิตประจำวัน ผู้คนมักต้องเผชิญกับการตัดสินใจในหลายรูปแบบ เช่น
-	•	ควรซื้อสิ่งนี้หรือไม่
-	•	ควรเลือกทำงานชิ้นไหนก่อน
-	•	ควรเลือกตัวเลือกใดระหว่างหลายทางเลือก
+ในชีวิตประจำวัน ผู้คนต้องเผชิญกับการตัดสินใจอยู่เสมอ เช่น
+	•	ควรซื้อของหรือไม่
+	•	ควรเลือกทำงานชิ้นใดก่อน
+	•	ควรเลือกตัวเลือกใดในหลายทางเลือก
 
-แม้บางการตัดสินใจจะดูไม่ซับซ้อน แต่เมื่อมีหลายปัจจัยเข้ามาเกี่ยวข้อง เช่น ราคา เวลา ความคุ้มค่า หรือความรู้สึกส่วนตัว มักทำให้ผู้ใช้เกิดความลังเลและใช้เวลานานในการตัดสินใจ
+แม้จะเป็นการตัดสินใจทั่วไป แต่เมื่อมีหลายปัจจัย เช่น ราคา เวลา ความคุ้มค่า และความรู้สึกส่วนตัว เข้ามาเกี่ยวข้อง มักทำให้เกิดความลังเลและใช้เวลานาน
 
-แอป Decidr จึงถูกพัฒนาขึ้นเพื่อช่วยให้ผู้ใช้สามารถตัดสินใจได้อย่างมีเหตุผล โดยใช้แนวคิด AI-assisted decision making ร่วมกับ การคำนวณแบบถ่วงน้ำหนัก (Weighted Scoring System)
+แอป Decidr ถูกพัฒนาขึ้นเพื่อแก้ปัญหาดังกล่าว โดยใช้แนวคิด
+	•	AI-assisted decision making
+	•	Weighted scoring system
+	•	Explainable AI
 
-ระบบจะช่วย:
-	•	วิเคราะห์ข้อดี–ข้อเสียของแต่ละตัวเลือก
-	•	คำนวณคะแนนตามปัจจัยที่ผู้ใช้กำหนด
-	•	แนะนำตัวเลือกที่เหมาะสม พร้อมเหตุผลประกอบ
+ร่วมกับการออกแบบ UX ที่เป็นมิตร โดยมีตัวละคร Jelly (สุนัขโกลเด้น) เป็นผู้ช่วยในการสื่อสารกับผู้ใช้
 
-นอกจากนี้ แอปยังมีฟีเจอร์
-	•	Scenario Simulation (จำลองผลลัพธ์ในอนาคต)
-	•	AI Chat Assistant (ผู้ช่วยถาม–ตอบ)
-
-ทำให้ Decidr เป็นมากกว่าแอปทั่วไป แต่เป็น Intelligent Decision Support System ที่ช่วยให้การตัดสินใจมีประสิทธิภาพและแม่นยำมากขึ้น
+แอปนี้จึงไม่ใช่เพียงเครื่องมือช่วยเลือก แต่เป็น
+👉 Intelligent & Personalized Decision Companion
 
 ⸻
 
 3. วัตถุประสงค์
-	•	เพื่อพัฒนา Mobile Application บน Android สำหรับช่วยตัดสินใจด้วย AI
-	•	เพื่อฝึกการพัฒนาแอปด้วย Kotlin และ Jetpack Compose
-	•	เพื่อเรียนรู้และประยุกต์ใช้ MVVM Architecture
-	•	เพื่อออกแบบระบบ Decision Engine ด้วย Weighted Scoring
-	•	เพื่อเชื่อมต่อ AI API สำหรับวิเคราะห์และให้คำแนะนำ
-	•	เพื่อพัฒนา Explainable AI ที่สามารถอธิบายเหตุผลได้
+	•	พัฒนาแอป Android สำหรับช่วยตัดสินใจด้วย AI
+	•	ฝึกใช้ Kotlin + Jetpack Compose
+	•	ออกแบบระบบ Decision Engine
+	•	เรียนรู้ MVVM Architecture
+	•	พัฒนา Explainable AI และ Feedback Loop
+	•	สร้างแอปที่มี UX/UI และ Branding ที่ชัดเจน
 
 ⸻
 
 4. กลุ่มเป้าหมาย
 	•	นักศึกษา
-	•	คนวัยทำงาน (อายุ 18–35 ปี)
-	•	ผู้ที่ต้องตัดสินใจบ่อย
-	•	ผู้ที่ต้องการเครื่องมือช่วยคิดอย่างมีเหตุผล
+	•	คนวัยทำงาน (18–35 ปี)
+	•	คนที่ตัดสินใจยาก
+	•	ผู้ที่สนใจ AI และ productivity tools
 
 ⸻
 
-Step 2: Tech Stack
+⚙️ Step 2: Tech Stack
 
-2.1 Platform
-	•	Android Application
+Platform
+	•	Android (Kotlin)
 	•	Android Studio
-	•	Kotlin
 
-⸻
-
-2.2 UI Development
+UI
 	•	Jetpack Compose
-	•	Modern / Clean UI
-	•	State-based UI
+	•	Material 3
 
-⸻
+Architecture
+	•	MVVM
 
-2.3 Architecture
-	•	MVVM (Model – View – ViewModel)
+Database
+	•	Room Database
 
-⸻
-
-2.4 Navigation
-	•	Multi-Screen Navigation
-
-Screens:
-	•	MainScreen
-	•	AnalysisScreen
-	•	ResultScreen
-	•	HistoryScreen
-	•	ChatScreen
-
-⸻
-
-2.5 Database & Storage
-	•	Room Database (SQLite)
-	•	เก็บ Decision / Options / Factors / History
-
-⸻
-
-2.6 External Services
+AI
 	•	AI API (เช่น OpenAI)
 
-⸻
-
-2.7 Offline Capability
-	•	ใช้งานพื้นฐานได้แบบ Offline
-	•	AI ใช้ Online
+Design
+	•	Pastel UI + Mascot-driven UX
 
 ⸻
 
-Step 3: System Design
+🧱 Step 3: System Design
 
-3.1 แนวคิดการออกแบบ
-	•	Minimal
-	•	User-Friendly
-	•	Data-driven
-	•	Explainable
+🧠 Core Components
+
+1. Decision Engine
+	•	Weighted Scoring
+	•	Factor-based evaluation
+
+2. AI Reasoning Engine
+	•	วิเคราะห์ pros/cons
+	•	ให้ recommendation
+	•	อธิบายเหตุผล
+
+3. Feedback Loop ⭐
+	•	user กด 👍 / 👎
+	•	ระบบเรียนรู้พฤติกรรม
+
+4. Jelly Assistant 🐶
+	•	แสดงข้อความ
+	•	guide user
+	•	เพิ่ม personality
 
 ⸻
 
-3.2 Screen Structure
+📱 Screen Structure
 
 🔹 Main Screen
-	•	Input คำถาม
+	•	ใส่คำถาม
 	•	เพิ่มตัวเลือก
-	•	เพิ่มปัจจัย
-	•	กำหนด Weight
-	•	ปุ่ม Analyze
-
-⸻
-
-🔹 Analysis Screen
-	•	Loading
-	•	AI Processing
+	•	เพิ่ม factor + weight
+	•	Quick Mode / Advanced Mode
 
 ⸻
 
 🔹 Result Screen
-	•	คะแนนแต่ละตัวเลือก
-	•	Pros / Cons
-	•	Recommendation
-	•	Confidence Score
-
-⸻
-
-🔹 History Screen
-	•	รายการย้อนหลัง
-	•	แสดงผลลัพธ์ + คะแนน
+	•	แสดงคะแนน
+	•	Highlight ตัวเลือกที่ดีที่สุด
+	•	แสดงเหตุผล (Explainable AI)
+	•	Jelly ให้คำแนะนำ
 
 ⸻
 
 🔹 Chat Screen
-	•	AI ตอบคำถามเพิ่มเติม
+	•	ถามต่อ
+	•	AI ตอบแบบ context-aware
 
 ⸻
 
-3.3 System Flow
-	1.	ผู้ใช้ใส่คำถาม
-	2.	เพิ่มตัวเลือก (≥ 2)
-	3.	เพิ่มปัจจัย + weight
-	4.	กด Analyze
-	5.	ระบบคำนวณคะแนน
-	6.	AI วิเคราะห์
-	7.	แสดงผลลัพธ์
-	8.	บันทึก History
-	9.	ผู้ใช้ถามต่อได้
+🔹 History Screen
+	•	ดู decision ย้อนหลัง
+	•	ดูผล + feedback
 
 ⸻
 
-3.4 Data Structure
+🔹 Template Screen
+	•	เลือกประเภทการตัดสินใจ
+	•	auto-fill factor
+
+⸻
+
+🔄 System Flow
+	1.	ผู้ใช้สร้างคำถาม
+	2.	เลือก Mode (Quick / Advanced)
+	3.	ใส่ข้อมูล
+	4.	ระบบคำนวณคะแนน
+	5.	AI วิเคราะห์
+	6.	แสดงผล + Jelly แนะนำ
+	7.	user ให้ feedback
+	8.	บันทึกข้อมูล
+
+⸻
+
+🗃️ Data Structure
 
 Decision
 	•	id
 	•	title
+	•	mode
 	•	created_at
 
 Option
@@ -185,64 +179,48 @@ Factor
 
 History
 	•	id
-	•	decision_id
 	•	result
 	•	confidence
+	•	feedback
 	•	timestamp
 
 ⸻
 
-Step 4: Functional Requirements (MVP)
+⭐ Step 4: Functional Requirements
 
-4.1 Create Decision
-	•	เพิ่มคำถาม
+Core
 	•	เพิ่มตัวเลือก
-	•	เพิ่มปัจจัย
-	•	กำหนด weight
+	•	เพิ่ม factor + weight
+	•	วิเคราะห์ decision
 
-⸻
-
-4.2 Decision Analysis 
-	•	คำนวณคะแนน
-	•	วิเคราะห์ข้อดี–ข้อเสีย
-	•	แสดง Recommendation
-
-⸻
-
-4.3 AI Reasoning 
-	•	วิเคราะห์ข้อความ
+AI
+	•	วิเคราะห์ pros/cons
+	•	แนะนำตัวเลือก
 	•	อธิบายเหตุผล
 
-⸻
+Advanced
+	•	Scenario simulation
+	•	Chat follow-up
+	•	Feedback learning
 
-4.4 Scenario Simulation 
-	•	จำลองผลลัพธ์ของแต่ละตัวเลือก
-
-⸻
-
-4.5 History
-	•	บันทึกผล
-	•	ดูย้อนหลัง
-
-⸻
-
-4.6 Chat
-	•	ถาม–ตอบกับ AI
+UX
+	•	Jelly assistant
+	•	Quick Mode
+	•	Templates
 
 ⸻
 
-Step 5: Non-Functional Requirements
+⚡ Step 5: Non-Functional Requirements
 	•	ใช้งานง่าย
 	•	ตอบสนองเร็ว
-	•	UI ทันสมัย
-	•	เชื่อถือได้
-	•	รองรับการขยายระบบ
+	•	UI น่ารัก + ทันสมัย
+	•	Reliable
+	•	ขยายระบบได้
 
 ⸻
 
-Step 6: Expected Outcomes
-	•	ได้แอป Android ที่ช่วยตัดสินใจได้จริง
-	•	เข้าใจ Jetpack Compose และ MVVM
-	•	ได้ฝึกออกแบบ Decision Engine
-	•	ได้เรียนรู้การใช้ AI API
-	•	ได้โปรเจกต์ Portfolio ระดับสูง
+🎯 Step 6: Expected Outcomes
+	•	ได้แอป Android ใช้งานจริง
+	•	เข้าใจ AI integration
+	•	ได้ portfolio ระดับสูง
+	•	แสดงความสามารถด้าน product thinkin
