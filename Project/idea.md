@@ -1,6 +1,6 @@
 Project Proposal
 
-Mobile Application: Decidr by sarucha
+Mobile Application: Decidr 
 
 ⸻
 
