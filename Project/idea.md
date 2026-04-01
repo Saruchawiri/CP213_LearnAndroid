@@ -4,16 +4,16 @@ Mobile Application: Decidr by sarucha
 
 ⸻
 
-🧸 🐶 Branding Concept
+Branding Concept
 	•	App Name: Decidr
 	•	Creator: sarucha
 	•	Mascot: Jelly (Golden Retriever 🐶)
 	•	Concept:
-👉 “เพื่อนอัจฉริยะที่ช่วยคุณตัดสินใจ”
+“เพื่อนอัจฉริยะที่ช่วยคุณตัดสินใจ”
 
 ⸻
 
-🧠 Step 1: Project Overview
+Step 1: Project Overview
 
 1. ชื่อโครงการ
 
@@ -38,8 +38,7 @@ AI-powered Decision Support Mobile Application
 
 ร่วมกับการออกแบบ UX ที่เป็นมิตร โดยมีตัวละคร Jelly (สุนัขโกลเด้น) เป็นผู้ช่วยในการสื่อสารกับผู้ใช้
 
-แอปนี้จึงไม่ใช่เพียงเครื่องมือช่วยเลือก แต่เป็น
-👉 Intelligent & Personalized Decision Companion
+แอปนี้จึงไม่ใช่เพียงเครื่องมือช่วยเลือก แต่เป็น Intelligent & Personalized Decision Companion
 
 ⸻
 
@@ -61,7 +60,7 @@ AI-powered Decision Support Mobile Application
 
 ⸻
 
-⚙️ Step 2: Tech Stack
+Step 2: Tech Stack
 
 Platform
 	•	Android (Kotlin)
@@ -85,9 +84,9 @@ Design
 
 ⸻
 
-🧱 Step 3: System Design
+Step 3: System Design
 
-🧠 Core Components
+Core Components
 
 1. Decision Engine
 	•	Weighted Scoring
@@ -98,20 +97,20 @@ Design
 	•	ให้ recommendation
 	•	อธิบายเหตุผล
 
-3. Feedback Loop ⭐
+3. Feedback Loop 
 	•	user กด 👍 / 👎
 	•	ระบบเรียนรู้พฤติกรรม
 
-4. Jelly Assistant 🐶
+4. Jelly Assistant 
 	•	แสดงข้อความ
 	•	guide user
 	•	เพิ่ม personality
 
 ⸻
 
-📱 Screen Structure
+ Screen Structure
 
-🔹 Main Screen
+ Main Screen
 	•	ใส่คำถาม
 	•	เพิ่มตัวเลือก
 	•	เพิ่ม factor + weight
@@ -119,7 +118,7 @@ Design
 
 ⸻
 
-🔹 Result Screen
+ Result Screen
 	•	แสดงคะแนน
 	•	Highlight ตัวเลือกที่ดีที่สุด
 	•	แสดงเหตุผล (Explainable AI)
@@ -127,25 +126,25 @@ Design
 
 ⸻
 
-🔹 Chat Screen
+ Chat Screen
 	•	ถามต่อ
 	•	AI ตอบแบบ context-aware
 
 ⸻
 
-🔹 History Screen
+ History Screen
 	•	ดู decision ย้อนหลัง
 	•	ดูผล + feedback
 
 ⸻
 
-🔹 Template Screen
+ Template Screen
 	•	เลือกประเภทการตัดสินใจ
 	•	auto-fill factor
 
 ⸻
 
-🔄 System Flow
+ System Flow
 	1.	ผู้ใช้สร้างคำถาม
 	2.	เลือก Mode (Quick / Advanced)
 	3.	ใส่ข้อมูล
@@ -157,7 +156,7 @@ Design
 
 ⸻
 
-🗃️ Data Structure
+ Data Structure
 
 Decision
 	•	id
@@ -186,7 +185,7 @@ History
 
 ⸻
 
-⭐ Step 4: Functional Requirements
+ Step 4: Functional Requirements
 
 Core
 	•	เพิ่มตัวเลือก
@@ -210,7 +209,7 @@ UX
 
 ⸻
 
-⚡ Step 5: Non-Functional Requirements
+ Step 5: Non-Functional Requirements
 	•	ใช้งานง่าย
 	•	ตอบสนองเร็ว
 	•	UI น่ารัก + ทันสมัย
@@ -219,7 +218,7 @@ UX
 
 ⸻
 
-🎯 Step 6: Expected Outcomes
+ Step 6: Expected Outcomes
 	•	ได้แอป Android ใช้งานจริง
 	•	เข้าใจ AI integration
 	•	ได้ portfolio ระดับสูง
