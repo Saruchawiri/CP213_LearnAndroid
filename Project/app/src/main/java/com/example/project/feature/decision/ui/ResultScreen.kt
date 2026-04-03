@@ -10,6 +10,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.ThumbDown
+import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.outlined.ThumbDown
+import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,9 +45,12 @@ fun ResultScreen(
     options: List<Option> = listOf(
         Option("opt-1", "Noodles", "Yummy bowl of ramen"),
         Option("opt-2", "Sushi", "Fresh salmon rolls")
-    )
+    ),
+    onFeedback: (Boolean) -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+    var feedbackState by remember { mutableStateOf<Boolean?>(null) }
+    var showThanks by remember { mutableStateOf(false) }
 
     if (recommendation == null || options.isEmpty()) {
         Column(
@@ -238,6 +245,85 @@ fun ResultScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Feedback Section
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Was this helpful?",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        IconButton(
+                            onClick = {
+                                feedbackState = true
+                                showThanks = true
+                                onFeedback(true)
+                            },
+                            modifier = Modifier
+                                .size(56.dp)
+                                .background(
+                                    color = if (feedbackState == true) MaterialTheme.colorScheme.primary else Color.Transparent,
+                                    shape = RoundedCornerShape(12.dp)
+                                )
+                        ) {
+                            Icon(
+                                imageVector = if (feedbackState == true) Icons.Filled.ThumbUp else Icons.Outlined.ThumbUp,
+                                contentDescription = "Like",
+                                tint = if (feedbackState == true) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer,
+                                modifier = Modifier.size(28.dp)
+                            )
+                        }
+                        
+                        Spacer(modifier = Modifier.width(24.dp))
+                        
+                        IconButton(
+                            onClick = {
+                                feedbackState = false
+                                showThanks = true
+                                onFeedback(false)
+                            },
+                            modifier = Modifier
+                                .size(56.dp)
+                                .background(
+                                    color = if (feedbackState == false) MaterialTheme.colorScheme.error else Color.Transparent,
+                                    shape = RoundedCornerShape(12.dp)
+                                )
+                        ) {
+                            Icon(
+                                imageVector = if (feedbackState == false) Icons.Filled.ThumbDown else Icons.Outlined.ThumbDown,
+                                contentDescription = "Dislike",
+                                tint = if (feedbackState == false) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onSecondaryContainer,
+                                modifier = Modifier.size(28.dp)
+                            )
+                        }
+                    }
+                    
+                    if (showThanks) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "Thanks for the feedback! 🐾",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    }
+                }
+            }
+            
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

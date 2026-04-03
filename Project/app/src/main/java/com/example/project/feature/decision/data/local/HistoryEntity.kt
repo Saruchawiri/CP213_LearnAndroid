@@ -23,5 +23,6 @@ data class HistoryEntity(
     val chosenOptionId: String,
     val confidenceScore: Float,
     val reasoning: String,
-    val completedAt: Long
+    val completedAt: Long,
+    val isLiked: Boolean? = null
 )

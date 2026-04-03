@@ -32,3 +32,8 @@ data class AiChatRequest(
 data class AiChatResponse(
     val reply: String
 )
+
+data class AiFeedbackRequest(
+    val decisionId: String,
+    val isLiked: Boolean
+)

@@ -28,4 +28,7 @@ interface DecidrDao {
 
     @Query("DELETE FROM decisions WHERE id = :decisionId")
     suspend fun deleteDecisionById(decisionId: String)
+
+    @Query("UPDATE history SET isLiked = :isLiked WHERE historyId = :historyId")
+    suspend fun updateFeedback(historyId: Long, isLiked: Boolean)
 }

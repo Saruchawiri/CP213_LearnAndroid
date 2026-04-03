@@ -9,4 +9,7 @@ interface AiApiService {
 
     @POST("v1/chat")
     suspend fun sendChatMessage(@Body request: AiChatRequest): AiChatResponse
+
+    @POST("v1/feedback")
+    suspend fun submitFeedback(@Body request: AiFeedbackRequest)
 }
