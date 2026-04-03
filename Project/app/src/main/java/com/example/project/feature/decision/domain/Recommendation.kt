@@ -8,6 +8,7 @@ data class Recommendation(
 )
 
 data class ProsCons(
+    val score: Int = 0,
     val pros: List<String>,
     val cons: List<String>
 )

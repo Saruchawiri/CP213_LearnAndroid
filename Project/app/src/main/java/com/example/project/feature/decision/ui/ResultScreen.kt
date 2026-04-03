@@ -38,8 +38,8 @@ fun ResultScreen(
         reasoning = "Noodles offer the best balance of delicious taste and affordability! Plus, it's super comforting! 🍜",
         confidenceScore = 0.85f,
         prosAndCons = mapOf(
-            "opt-1" to ProsCons(listOf("Budget-friendly", "Very tasty"), listOf("Might be hot today")),
-            "opt-2" to ProsCons(listOf("Incredible taste", "Healthy"), listOf("A bit expensive"))
+            "opt-1" to ProsCons(score = 92, pros = listOf("Budget-friendly", "Very tasty"), cons = listOf("Might be hot today")),
+            "opt-2" to ProsCons(score = 78, pros = listOf("Incredible taste", "Healthy"), cons = listOf("A bit expensive"))
         )
     ),
     options: List<Option> = listOf(
@@ -201,6 +201,156 @@ fun ResultScreen(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Score Chart Visualization
+            Text(
+                text = "Score Analysis",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    val maxScore = recommendation.prosAndCons.values.maxOfOrNull { it.score }?.coerceAtLeast(1) ?: 100
+                    
+                    options.forEach { option ->
+                        val optionData = recommendation.prosAndCons[option.id]
+                        val score = optionData?.score ?: 0
+                        val targetProgress = score.toFloat() / 100f
+                        
+                        var currentProgress by remember { mutableFloatStateOf(0f) }
+                        LaunchedEffect(targetProgress) {
+                            currentProgress = targetProgress
+                        }
+                        
+                        val animatedProgress by animateFloatAsState(
+                            targetValue = currentProgress,
+                            animationSpec = tween(durationMillis = 1000, delayMillis = 200),
+                            label = "chart_anim"
+                        )
+                        
+                        // Pastel colors based on rank
+                        val isWinner = option.id == recommendation.recommendedOptionId
+                        val barColor = if (isWinner) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary.copy(alpha = 0.6f)
+                        
+                        Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = option.title,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = if (isWinner) FontWeight.Bold else FontWeight.Normal
+                                )
+                                Text(
+                                    text = "$score",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = barColor
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(20.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(MaterialTheme.colorScheme.surface)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth(animatedProgress)
+                                        .fillMaxHeight()
+                                        .background(barColor)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Score Chart Visualization
+            Text(
+                text = "Score Analysis",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    val maxScore = recommendation.prosAndCons.values.maxOfOrNull { it.score }?.coerceAtLeast(1) ?: 100
+                    
+                    options.forEach { option ->
+                        val optionData = recommendation.prosAndCons[option.id]
+                        val score = optionData?.score ?: 0
+                        val targetProgress = score.toFloat() / 100f
+                        
+                        var currentProgress by remember { mutableFloatStateOf(0f) }
+                        LaunchedEffect(targetProgress) {
+                            currentProgress = targetProgress
+                        }
+                        
+                        val animatedProgress by animateFloatAsState(
+                            targetValue = currentProgress,
+                            animationSpec = tween(durationMillis = 1000, delayMillis = 200),
+                            label = "chart_anim"
+                        )
+                        
+                        // Pastel colors based on rank
+                        val isWinner = option.id == recommendation.recommendedOptionId
+                        val barColor = if (isWinner) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary.copy(alpha = 0.6f)
+                        
+                        Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = option.title,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = if (isWinner) FontWeight.Bold else FontWeight.Normal
+                                )
+                                Text(
+                                    text = "$score",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = barColor
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(20.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(MaterialTheme.colorScheme.surface)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth(animatedProgress)
+                                        .fillMaxHeight()
+                                        .background(barColor)
+                                )
+                            }
+                        }
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
