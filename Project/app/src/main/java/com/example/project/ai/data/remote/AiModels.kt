@@ -17,3 +17,18 @@ data class OptionAnalysisResponse(
     val pros: List<String>,
     val cons: List<String>
 )
+
+data class AiChatMessage(
+    val role: String,
+    val content: String
+)
+
+data class AiChatRequest(
+    val context: String,
+    val messages: List<AiChatMessage>,
+    val newMessage: String
+)
+
+data class AiChatResponse(
+    val reply: String
+)
