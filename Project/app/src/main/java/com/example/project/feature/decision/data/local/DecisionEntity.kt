@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class DecisionEntity(
     @PrimaryKey val id: String,
     val query: String,
-    val optionsJson: String,  // Serialized List<Option>
-    val factorsJson: String   // Serialized List<Factor>
+    val timestamp: Long
 )
