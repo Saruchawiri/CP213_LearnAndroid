@@ -20,9 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.project.R
 import com.example.project.feature.decision.domain.Option
 import com.example.project.feature.decision.domain.ProsCons
 import com.example.project.feature.decision.domain.Recommendation
@@ -46,7 +48,8 @@ fun ResultScreen(
         Option("opt-1", "Noodles", "Yummy bowl of ramen"),
         Option("opt-2", "Sushi", "Fresh salmon rolls")
     ),
-    onFeedback: (Boolean) -> Unit = {}
+    onFeedback: (Boolean) -> Unit = {},
+    onNavigateToChat: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     var feedbackState by remember { mutableStateOf<Boolean?>(null) }
@@ -60,8 +63,8 @@ fun ResultScreen(
         ) {
             CircularProgressIndicator()
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Jelly is thinking...")
-            Button(onClick = onBack, modifier = Modifier.padding(top = 16.dp)) { Text("Go back") }
+            Text(stringResource(R.string.jelly_thinking))
+            Button(onClick = onBack, modifier = Modifier.padding(top = 16.dp)) { Text(stringResource(R.string.go_back)) }
         }
         return
     }
@@ -72,7 +75,7 @@ fun ResultScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Decision Result") },
+                title = { Text(stringResource(R.string.decision_result)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
@@ -115,7 +118,7 @@ fun ResultScreen(
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "Winner!",
+                        text = stringResource(R.string.winner),
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
@@ -147,7 +150,7 @@ fun ResultScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Jelly's Reasoning",
+                        text = stringResource(R.string.jelly_reasoning),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -165,7 +168,7 @@ fun ResultScreen(
 
             // Confidence Score
             Text(
-                text = "Confidence Score",
+                text = stringResource(R.string.confidence_score),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 4.dp)
@@ -357,7 +360,7 @@ fun ResultScreen(
 
             // All Scores (Pros & Cons)
             Text(
-                text = "Option Breakdown",
+                text = stringResource(R.string.option_breakdown),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 4.dp)
@@ -382,12 +385,12 @@ fun ResultScreen(
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             if (prosCons.pros.isNotEmpty()) {
-                                Text("Pros:", fontWeight = FontWeight.SemiBold, color = Color(0xFF4CAF50), modifier = Modifier.padding(bottom = 4.dp))
+                                Text(stringResource(R.string.pros), fontWeight = FontWeight.SemiBold, color = Color(0xFF4CAF50), modifier = Modifier.padding(bottom = 4.dp))
                                 prosCons.pros.forEach { pro -> Text("• $pro", style = MaterialTheme.typography.bodyMedium) }
                                 Spacer(modifier = Modifier.height(8.dp))
                             }
                             if (prosCons.cons.isNotEmpty()) {
-                                Text("Cons:", fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(bottom = 4.dp))
+                                Text(stringResource(R.string.cons), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(bottom = 4.dp))
                                 prosCons.cons.forEach { con -> Text("• $con", style = MaterialTheme.typography.bodyMedium) }
                             }
                         }
@@ -408,7 +411,7 @@ fun ResultScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Was this helpful?",
+                        text = stringResource(R.string.was_this_helpful),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -466,7 +469,7 @@ fun ResultScreen(
                     if (showThanks) {
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = "Thanks for the feedback! 🐾",
+                            text = stringResource(R.string.thanks_feedback),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSecondaryContainer
                         )
@@ -474,6 +477,17 @@ fun ResultScreen(
                 }
             }
             
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Chat Activation Button
+            Button(
+                onClick = onNavigateToChat,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            ) {
+                Text(stringResource(R.string.chat_with_jelly), style = MaterialTheme.typography.titleMedium)
+            }
             Spacer(modifier = Modifier.height(32.dp))
         }
     }
