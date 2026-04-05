@@ -1,59 +1,72 @@
 package com.example.project.feature.decision.data
 
-import com.example.project.feature.decision.data.local.DecisionDao
+import com.example.project.feature.decision.data.local.DecidrDao
 import com.example.project.feature.decision.data.local.DecisionEntity
+import com.example.project.feature.decision.data.local.DecisionWithDetails
+import com.example.project.feature.decision.data.local.OptionEntity
+import com.example.project.feature.decision.data.local.FactorEntity
 import com.example.project.feature.decision.domain.Decision
+import com.example.project.feature.decision.domain.Option
+import com.example.project.feature.decision.domain.Factor
 import com.example.project.feature.decision.domain.DecisionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.example.project.feature.decision.domain.Option
-import com.example.project.feature.decision.domain.Factor
 
 class OfflineFirstDecisionRepository(
-    private val decisionDao: DecisionDao,
-    private val gson: Gson
+    private val decidrDao: DecidrDao
 ) : DecisionRepository {
 
     override suspend fun saveDecision(decision: Decision) {
-        val entity = DecisionEntity(
+        val decisionEntity = DecisionEntity(
             id = decision.id,
             query = decision.query,
-            optionsJson = gson.toJson(decision.options),
-            factorsJson = gson.toJson(decision.factors)
+            timestamp = System.currentTimeMillis()
         )
-        decisionDao.insertDecision(entity)
+        decidrDao.insertDecision(decisionEntity)
+
+        val optionEntities = decision.options.map { option ->
+            OptionEntity(
+                id = option.id,
+                decisionId = decision.id,
+                title = option.title,
+                description = option.description
+            )
+        }
+        decidrDao.insertOptions(optionEntities)
+
+        val factorEntities = decision.factors.map { factor ->
+            FactorEntity(
+                id = factor.id,
+                decisionId = decision.id,
+                name = factor.name,
+                weight = factor.weight
+            )
+        }
+        decidrDao.insertFactors(factorEntities)
     }
 
     override suspend fun deleteDecision(decisionId: String) {
-        decisionDao.deleteDecisionById(decisionId)
+        decidrDao.deleteDecisionById(decisionId)
     }
 
     override fun getDecision(decisionId: String): Flow<Decision?> {
-        return decisionDao.getDecisionById(decisionId).map { entity ->
+        return decidrDao.getDecisionWithDetails(decisionId).map { entity ->
             entity?.toDomainModel()
         }
     }
 
     override fun getAllDecisions(): Flow<List<Decision>> {
-        return decisionDao.getAllDecisions().map { list ->
+        return decidrDao.getAllDecisionsWithDetails().map { list ->
             list.map { it.toDomainModel() }
         }
     }
 
-    private fun DecisionEntity.toDomainModel(): Decision {
-        val optionsType = object : TypeToken<List<Option>>() {}.type
-        val factorsType = object : TypeToken<List<Factor>>() {}.type
-
-        val optionsList: List<Option> = gson.fromJson(this.optionsJson, optionsType) ?: emptyList()
-        val factorsList: List<Factor> = gson.fromJson(this.factorsJson, factorsType) ?: emptyList()
-
+    private fun DecisionWithDetails.toDomainModel(): Decision {
         return Decision(
-            id = this.id,
-            query = this.query,
-            options = optionsList,
-            factors = factorsList
+            id = this.decision.id,
+            query = this.decision.query,
+            options = this.options.map { Option(it.id, it.title, it.description) },
+            factors = this.factors.map { Factor(it.id, it.name, it.weight) }
         )
     }
 }

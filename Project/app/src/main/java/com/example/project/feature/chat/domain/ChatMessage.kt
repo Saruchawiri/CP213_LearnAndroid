@@ -1,3 +1,5 @@
+package com.example.project.feature.chat.domain
+
 import androidx.compose.runtime.Immutable
 
 @Immutable
