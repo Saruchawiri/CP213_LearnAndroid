@@ -23,6 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.project.ui.components.JellyMessageBubble
 import java.util.UUID
+import com.example.project.feature.decision.domain.Decision
+import com.example.project.feature.decision.domain.Option
+import com.example.project.feature.decision.domain.Factor
 
 data class OptionItem(val id: String = UUID.randomUUID().toString(), var value: String = "")
 data class FactorItem(val id: String = UUID.randomUUID().toString(), var name: String = "", var weight: Float = 0.5f)
@@ -30,7 +33,7 @@ data class FactorItem(val id: String = UUID.randomUUID().toString(), var name: S
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    onNavigateToResult: () -> Unit,
+    onNavigateToResult: (Decision) -> Unit,
     onNavigateToHistory: () -> Unit
 ) {
     var question by remember { mutableStateOf("") }
@@ -196,7 +199,19 @@ fun MainScreen(
                 Spacer(modifier = Modifier.height(32.dp))
                 
                 Button(
-                    onClick = onNavigateToResult,
+                    onClick = {
+                        val decision = Decision(
+                            id = UUID.randomUUID().toString(),
+                            query = question.trim(),
+                            options = options.filter { it.value.isNotBlank() }.map { 
+                                Option(id = it.id, title = it.value.trim(), description = "") 
+                            },
+                            factors = factors.filter { it.name.isNotBlank() }.map { 
+                                Factor(id = it.id, name = it.name.trim(), weight = it.weight) 
+                            }
+                        )
+                        onNavigateToResult(decision)
+                    },
                     enabled = isValid,
                     modifier = Modifier
                         .fillMaxWidth()

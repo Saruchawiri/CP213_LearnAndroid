@@ -11,10 +11,19 @@ import com.example.project.ui.screens.ResultScreen
 import com.example.project.ui.screens.HistoryScreen
 import com.example.project.feature.chat.ui.ChatScreen
 
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import com.example.project.feature.decision.domain.Decision
+import com.example.project.feature.decision.domain.ProsCons
+import com.example.project.feature.decision.domain.Recommendation
+
 @Composable
 fun DecidrNavGraph() {
 
     val navController = rememberNavController()
+    var currentDecision by remember { mutableStateOf<Decision?>(null) }
 
     NavHost(
         navController = navController,
@@ -35,7 +44,8 @@ fun DecidrNavGraph() {
 
         composable("main") {
             MainScreen(
-                onNavigateToResult = {
+                onNavigateToResult = { decision ->
+                    currentDecision = decision
                     navController.navigate("result")
                 },
                 onNavigateToHistory = {
@@ -45,15 +55,39 @@ fun DecidrNavGraph() {
         }
 
         composable("result") {
-            ResultScreen(
-                onBack = {
-                    navController.popBackStack()
-                },
-                // Pass a callback to navigate to Chat. In real app, pass Decision ID.
-                onNavigateToChat = {
-                    navController.navigate("chat")
+            val decision = currentDecision
+            
+            if (decision != null && decision.options.isNotEmpty()) {
+                // Generate a quick mock recommendation based on the user's actual first option
+                val mockRec = remember(decision) {
+                    val recommendedOption = decision.options.first()
+                    Recommendation(
+                        recommendedOptionId = recommendedOption.id,
+                        reasoning = "${recommendedOption.title} is definitely the best choice based on your factors! 🐶",
+                        confidenceScore = 0.9f,
+                        prosAndCons = decision.options.associate { 
+                            it.id to ProsCons(score = (70..95).random(), pros = listOf("Great choice!"), cons = listOf("None")) 
+                        }
+                    )
                 }
-            )
+                
+                ResultScreen(
+                    options = decision.options,
+                    recommendation = mockRec,
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToChat = {
+                        navController.navigate("chat")
+                    }
+                )
+            } else {
+                // Fallback
+                ResultScreen(
+                    onBack = { navController.popBackStack() },
+                    onNavigateToChat = { navController.navigate("chat") }
+                )
+            }
         }
 
         composable("history") {
