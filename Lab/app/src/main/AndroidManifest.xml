@@ -29,10 +29,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".SensorActivity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
-        <activity android:name=".GalleryActivity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
         <activity android:name=".Part1Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
         <activity android:name=".Part2Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
-        <activity android:name=".DetailActivity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part3Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part4Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part5Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part6Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part8Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part9Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part10Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part11Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
+        <activity android:name=".Part12Activity" android:exported="false" android:theme="@style/Theme.LabLearnAndroid" />
     </application>
 
 </manifest>
