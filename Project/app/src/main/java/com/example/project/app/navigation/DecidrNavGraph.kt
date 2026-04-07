@@ -4,105 +4,193 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.*
-import com.example.project.ui.screens.MainScreen
-import com.example.project.ui.screens.ResultScreen
-import com.example.project.ui.screens.HistoryScreen
-import com.example.project.feature.chat.ui.ChatScreen
-
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.project.ai.data.GeminiAiChatRepository
+import com.example.project.ai.data.GeminiRecommendationRepository
+import com.example.project.ai.data.remote.GeminiClient
+import com.example.project.core.error.Resource
+import com.example.project.feature.chat.ui.ChatScreen
+import com.example.project.feature.chat.ui.ChatViewModel
 import com.example.project.feature.decision.domain.Decision
-import com.example.project.feature.decision.domain.ProsCons
 import com.example.project.feature.decision.domain.Recommendation
+import com.example.project.feature.splash.SplashScreen
+import com.example.project.ui.screens.HistoryScreen
+import com.example.project.ui.screens.MainScreen
+import com.example.project.ui.screens.ResultScreen
+
+// ── Replace this with your Gemini API key ────────────────────────────────────
+// Get a free key at: https://aistudio.google.com/app/apikey
+private const val GEMINI_API_KEY = "AIzaSyAGRTevLjlVrvpFcfTUPu5ITNrbzC9NGXM"
 
 @Composable
 fun DecidrNavGraph() {
 
-    val navController = rememberNavController()
+    val navController  = rememberNavController()
     var currentDecision by remember { mutableStateOf<Decision?>(null) }
+
+    // Shared Gemini service instance
+    val geminiService  = remember { GeminiClient.geminiApiService }
+    val recommendRepo  = remember { GeminiRecommendationRepository(geminiService, GEMINI_API_KEY) }
+    val chatRepo       = remember { GeminiAiChatRepository(geminiService, GEMINI_API_KEY) }
 
     NavHost(
         navController = navController,
-        startDestination = "main",
-        enterTransition = {
-            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, animationSpec = tween(500)) + fadeIn(tween(500))
+        startDestination = "splash",
+        enterTransition  = {
+            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500)) + fadeIn(tween(500))
         },
-        exitTransition = {
-            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left, animationSpec = tween(500)) + fadeOut(tween(500))
+        exitTransition   = {
+            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500)) + fadeOut(tween(500))
         },
         popEnterTransition = {
-            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right, animationSpec = tween(500)) + fadeIn(tween(500))
+            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500)) + fadeIn(tween(500))
         },
-        popExitTransition = {
-            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, animationSpec = tween(500)) + fadeOut(tween(500))
+        popExitTransition  = {
+            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500)) + fadeOut(tween(500))
         }
     ) {
 
+        // ── Splash ────────────────────────────────────────────────────────────
+        composable(
+            route          = "splash",
+            enterTransition = { fadeIn(tween(300)) },
+            exitTransition  = { fadeOut(tween(600)) }
+        ) {
+            SplashScreen(
+                onSplashComplete = {
+                    navController.navigate("main") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        // ── Main ──────────────────────────────────────────────────────────────
         composable("main") {
             MainScreen(
                 onNavigateToResult = { decision ->
                     currentDecision = decision
                     navController.navigate("result")
                 },
-                onNavigateToHistory = {
-                    navController.navigate("history")
-                }
+                onNavigateToHistory = { navController.navigate("history") }
             )
         }
 
+        // ── Result — calls Gemini to get real pros/cons ───────────────────────
         composable("result") {
             val decision = currentDecision
-            
+
             if (decision != null && decision.options.isNotEmpty()) {
-                // Generate a quick mock recommendation based on the user's actual first option
-                val mockRec = remember(decision) {
-                    val recommendedOption = decision.options.first()
-                    Recommendation(
-                        recommendedOptionId = recommendedOption.id,
-                        reasoning = "${recommendedOption.title} is definitely the best choice based on your factors! 🐶",
-                        confidenceScore = 0.9f,
-                        prosAndCons = decision.options.associate { 
-                            it.id to ProsCons(score = (70..95).random(), pros = listOf("Great choice!"), cons = listOf("None")) 
+
+                // State: null = loading, non-null = done
+                var recommendation by remember { mutableStateOf<Recommendation?>(null) }
+                var errorMsg       by remember { mutableStateOf<String?>(null) }
+
+                // Fetch from Gemini once
+                LaunchedEffect(decision.id) {
+                    when (val result = recommendRepo.getRecommendation(decision)) {
+                        is Resource.Success -> recommendation = result.data
+                        is Resource.Error   -> {
+                            errorMsg = "Jelly had trouble thinking... ${result.exception.message ?: ""}"
+                            // Show ResultScreen with fallback data so user isn't stuck
+                            recommendation = Recommendation(
+                                recommendedOptionId = decision.options.first().id,
+                                reasoning           = "Jelly couldn't connect to AI right now, but based on your options, the first one looks like a solid start! 🐶",
+                                confidenceScore     = 0.6f,
+                                prosAndCons         = decision.options.associate {
+                                    it.id to com.example.project.feature.decision.domain.ProsCons(
+                                        score = 70,
+                                        pros  = listOf("Worth considering"),
+                                        cons  = listOf("Check your internet and try again")
+                                    )
+                                }
+                            )
                         }
+                    }
+                }
+
+                if (recommendation == null) {
+                    // Loading while AI thinks
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        androidx.compose.foundation.layout.Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator()
+                            Text(
+                                text    = "Jelly is thinking... 🐶",
+                                style   = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(top = 16.dp)
+                            )
+                        }
+                    }
+                } else {
+                    ResultScreen(
+                        options        = decision.options,
+                        recommendation = recommendation,
+                        onBack         = { navController.popBackStack() },
+                        onNavigateToChat = { navController.navigate("chat") }
                     )
                 }
-                
-                ResultScreen(
-                    options = decision.options,
-                    recommendation = mockRec,
-                    onBack = {
-                        navController.popBackStack()
-                    },
-                    onNavigateToChat = {
-                        navController.navigate("chat")
-                    }
-                )
             } else {
-                // Fallback
                 ResultScreen(
-                    onBack = { navController.popBackStack() },
+                    onBack           = { navController.popBackStack() },
                     onNavigateToChat = { navController.navigate("chat") }
                 )
             }
         }
 
+        // ── History ───────────────────────────────────────────────────────────
         composable("history") {
-            HistoryScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            HistoryScreen(onBack = { navController.popBackStack() })
         }
 
+        // ── Chat — powered by Gemini ──────────────────────────────────────────
         composable("chat") {
-            ChatScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
+            val decision = currentDecision
+            val context  = decision?.let {
+                "The user is deciding: '${it.query}'. " +
+                "Options: ${it.options.joinToString(", ") { o -> o.title }}. " +
+                "Factors: ${it.factors.joinToString(", ") { f -> "${f.name} (weight ${f.weight})" }}."
+            } ?: ""
+
+            val chatViewModel: ChatViewModel = viewModel(
+                factory = object : ViewModelProvider.Factory {
+                    @Suppress("UNCHECKED_CAST")
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                        ChatViewModel(
+                            aiChatRepository = chatRepo,
+                            initialContext   = context
+                        ) as T
                 }
+            )
+
+            val uiState by chatViewModel.uiState.collectAsState()
+
+            ChatScreen(
+                onNavigateBack = { navController.popBackStack() },
+                uiState        = uiState,
+                onSendMessage  = { chatViewModel.sendMessage(it) }
             )
         }
     }

@@ -70,9 +70,10 @@ fun MainScreen(
 
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
+                .weight(1f)
+                .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            contentPadding = PaddingValues(bottom = 80.dp)
+            contentPadding = PaddingValues(bottom = 100.dp)
         ) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -150,7 +151,7 @@ fun MainScreen(
                     Column(modifier = Modifier.padding(top = 16.dp)) {
                         Text("Decision Factors", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium)
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         factors.forEachIndexed { index, factor ->
                             Column(modifier = Modifier.padding(vertical = 8.dp)) {
                                 Row(
@@ -170,7 +171,11 @@ fun MainScreen(
                                         onClick = { factors = factors.filterIndexed { i, _ -> i != index } },
                                         enabled = factors.size > 1
                                     ) {
-                                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Remove Factor", tint = if (factors.size > 1) MaterialTheme.colorScheme.error else Color.Gray)
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = "Remove Factor",
+                                            tint = if (factors.size > 1) MaterialTheme.colorScheme.error else Color.Gray
+                                        )
                                     }
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -185,7 +190,7 @@ fun MainScreen(
                                 }
                             }
                         }
-                        
+
                         TextButton(
                             onClick = { factors = factors + FactorItem() },
                             modifier = Modifier.padding(vertical = 4.dp)
@@ -196,18 +201,22 @@ fun MainScreen(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(32.dp))
-                
+            }
+
+            // ── Decide & History buttons — always at the bottom, always scrollable to ──
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+
                 Button(
                     onClick = {
                         val decision = Decision(
                             id = UUID.randomUUID().toString(),
                             query = question.trim(),
-                            options = options.filter { it.value.isNotBlank() }.map { 
-                                Option(id = it.id, title = it.value.trim(), description = "") 
+                            options = options.filter { it.value.isNotBlank() }.map {
+                                Option(id = it.id, title = it.value.trim(), description = "")
                             },
-                            factors = factors.filter { it.name.isNotBlank() }.map { 
-                                Factor(id = it.id, name = it.name.trim(), weight = it.weight) 
+                            factors = factors.filter { it.name.isNotBlank() }.map {
+                                Factor(id = it.id, name = it.name.trim(), weight = it.weight)
                             }
                         )
                         onNavigateToResult(decision)
