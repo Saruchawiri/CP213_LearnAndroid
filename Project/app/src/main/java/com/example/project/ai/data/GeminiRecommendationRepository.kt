@@ -32,20 +32,27 @@ $optionsList
 
 Decision factors: $factorsList
 
-Respond ONLY in valid JSON (no markdown, no explanation outside JSON) in this exact format:
+Respond ONLY in valid JSON (no markdown, no explanation outside JSON) and use the exact structure shown in this example:
+
 {
-  "recommendedOption": "<exact option name>",
-  "reasoning": "<2-3 sentence explanation of why this is the best choice, mentioning the factors>",
-  "confidenceScore": <number between 0.0 and 1.0>,
+  "recommendedOption": "Option 1 Name here",
+  "reasoning": "This option is best because it matches your factor of cost perfectly.",
+  "confidenceScore": 0.85,
   "analysis": {
-    "<exact option name>": {
-      "pros": ["<real specific pro>", "<real specific pro>"],
-      "cons": ["<real specific con>", "<real specific con>"]
+    "Option 1 Name here": {
+      "score": 90,
+      "pros": ["Very affordable", "Good location"],
+      "cons": ["Smaller size"]
+    },
+    "Option 2 Name here": {
+      "score": 60,
+      "pros": ["Large size"],
+      "cons": ["Too expensive", "Bad location"]
     }
   }
 }
 
-Important: pros and cons must be real, specific insights about each option (e.g. "tends to be expensive on weekends", "limited parking nearby") NOT score comparisons. Use the same language as the question.
+Important: pros and cons must be real, specific insights about each option. The score must be an integer between 0 and 100. Use the same language as the question.
 """.trimIndent()
 
             val request = GeminiRequest(
@@ -79,10 +86,10 @@ Important: pros and cons must be real, specific insights about each option (e.g.
                 .trim()
 
             val json           = JSONObject(cleaned)
-            val recommendedName = json.getString("recommendedOption").trim()
-            val reasoning      = json.getString("reasoning")
-            val confidence     = json.getDouble("confidenceScore").toFloat().coerceIn(0f, 1f)
-            val analysisJson   = json.getJSONObject("analysis")
+            val recommendedName = json.optString("recommendedOption", decision.options.firstOrNull()?.title ?: "").trim()
+            val reasoning      = json.optString("reasoning", "The AI provided an analysis for these options.")
+            val confidence     = json.optDouble("confidenceScore", 0.5).toFloat().coerceIn(0f, 1f)
+            val analysisJson   = json.optJSONObject("analysis") ?: JSONObject()
 
             // Map AI option names back to domain Option IDs
             val prosAndCons = decision.options.associate { option ->
@@ -94,6 +101,8 @@ Important: pros and cons must be real, specific insights about each option (e.g.
                 val optionJson = if (analysisJson.has(key)) analysisJson.getJSONObject(key)
                                  else JSONObject()
 
+                val score = optionJson.optInt("score", 0)
+
                 val pros = optionJson.optJSONArray("pros")
                     ?.let { arr -> (0 until arr.length()).map { arr.getString(it) } }
                     ?: listOf("Good overall option")
@@ -102,7 +111,7 @@ Important: pros and cons must be real, specific insights about each option (e.g.
                     ?.let { arr -> (0 until arr.length()).map { arr.getString(it) } }
                     ?: listOf("Consider your priorities")
 
-                option.id to ProsCons(score = 0, pros = pros, cons = cons)
+                option.id to ProsCons(score = score, pros = pros, cons = cons)
             }
 
             // Find the recommended option ID by name match

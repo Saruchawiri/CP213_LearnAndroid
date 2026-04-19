@@ -32,7 +32,7 @@ class NetworkAiRecommendationRepository(
 
                 // Map Response DTO back to Domain model
                 val mappedProsCons = response.optionsAnalysis.mapValues { entry ->
-                    ProsCons(pros = entry.value.pros, cons = entry.value.cons)
+                    ProsCons(score = entry.value.score, pros = entry.value.pros, cons = entry.value.cons)
                 }
 
                 val recommendation = Recommendation(

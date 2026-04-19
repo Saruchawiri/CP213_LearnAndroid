@@ -112,17 +112,18 @@ fun DecidrNavGraph() {
                     when (val result = recommendRepo.getRecommendation(decision)) {
                         is Resource.Success -> recommendation = result.data
                         is Resource.Error   -> {
-                            errorMsg = "Jelly had trouble thinking... ${result.exception.message ?: ""}"
+                            val actualError = result.exception.message ?: "Unknown error"
+                            errorMsg = "Jelly had trouble thinking... $actualError"
                             // Show ResultScreen with fallback data so user isn't stuck
                             recommendation = Recommendation(
                                 recommendedOptionId = decision.options.first().id,
-                                reasoning           = "Jelly couldn't connect to AI right now, but based on your options, the first one looks like a solid start! 🐶",
+                                reasoning           = "Error: $actualError\n\nFallback: Jelly couldn't connect to AI right now...",
                                 confidenceScore     = 0.6f,
                                 prosAndCons         = decision.options.associate {
                                     it.id to com.example.project.feature.decision.domain.ProsCons(
                                         score = 70,
                                         pros  = listOf("Worth considering"),
-                                        cons  = listOf("Check your internet and try again")
+                                        cons  = listOf("Error details: $actualError")
                                     )
                                 }
                             )

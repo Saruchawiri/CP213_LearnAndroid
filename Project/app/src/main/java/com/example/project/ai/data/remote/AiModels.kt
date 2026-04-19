@@ -14,6 +14,7 @@ data class AiDecidrResponse(
 )
 
 data class OptionAnalysisResponse(
+    val score: Int = 0,
     val pros: List<String>,
     val cons: List<String>
 )
