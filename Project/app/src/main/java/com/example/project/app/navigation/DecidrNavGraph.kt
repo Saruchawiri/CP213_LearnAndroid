@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.project.ai.data.GeminiAiChatRepository
 import com.example.project.ai.data.GeminiRecommendationRepository
 import com.example.project.ai.data.remote.GeminiClient
+import com.example.project.core.error.AppError
 import com.example.project.core.error.Resource
 import com.example.project.feature.chat.ui.ChatScreen
 import com.example.project.feature.chat.ui.ChatViewModel
@@ -103,55 +105,100 @@ fun DecidrNavGraph() {
 
             if (decision != null && decision.options.isNotEmpty()) {
 
-                // State: null = loading, non-null = done
+                // State: null = loading, non-null = done, error = show error screen
                 var recommendation by remember { mutableStateOf<Recommendation?>(null) }
                 var errorMsg       by remember { mutableStateOf<String?>(null) }
+                // retryKey increments to re-trigger LaunchedEffect
+                var retryKey       by remember { mutableStateOf(0) }
 
-                // Fetch from Gemini once
-                LaunchedEffect(decision.id) {
+                // Fetch from Gemini — re-runs whenever retryKey changes
+                LaunchedEffect(retryKey) {
+                    recommendation = null
+                    errorMsg       = null
                     when (val result = recommendRepo.getRecommendation(decision)) {
                         is Resource.Success -> recommendation = result.data
                         is Resource.Error   -> {
-                            val actualError = result.exception.message ?: "Unknown error"
-                            errorMsg = "Jelly had trouble thinking... $actualError"
-                            // Show ResultScreen with fallback data so user isn't stuck
-                            recommendation = Recommendation(
-                                recommendedOptionId = decision.options.first().id,
-                                reasoning           = "Error: $actualError\n\nFallback: Jelly couldn't connect to AI right now...",
-                                confidenceScore     = 0.6f,
-                                prosAndCons         = decision.options.associate {
-                                    it.id to com.example.project.feature.decision.domain.ProsCons(
-                                        score = 70,
-                                        pros  = listOf("Worth considering"),
-                                        cons  = listOf("Error details: $actualError")
-                                    )
-                                }
-                            )
+                            errorMsg = when (result.exception) {
+                                is AppError.RateLimitError ->
+                                    "Jelly is getting too many requests right now 😅\nPlease wait a moment and try again!"
+                                is AppError.NetworkError ->
+                                    "Jelly can't connect to the internet 🌐\nPlease check your connection and try again."
+                                is AppError.AiServiceUnavailable ->
+                                    "Jelly's brain is temporarily unavailable 🐶\nPlease try again in a few seconds."
+                                else ->
+                                    result.exception.message ?: "Something went wrong. Please try again."
+                            }
                         }
                     }
                 }
 
-                if (recommendation == null) {
-                    // Loading while AI thinks
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        androidx.compose.foundation.layout.Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            CircularProgressIndicator()
-                            Text(
-                                text    = "Jelly is thinking... 🐶",
-                                style   = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(top = 16.dp)
-                            )
+                when {
+                    // ── Loading ──────────────────────────────────────────────
+                    recommendation == null && errorMsg == null -> {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            androidx.compose.foundation.layout.Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                CircularProgressIndicator()
+                                Text(
+                                    text     = "Jelly is thinking... 🐶",
+                                    style    = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(top = 16.dp)
+                                )
+                            }
                         }
                     }
-                } else {
-                    ResultScreen(
-                        options        = decision.options,
-                        recommendation = recommendation,
-                        onBack         = { navController.popBackStack() },
-                        onNavigateToChat = { navController.navigate("chat") }
-                    )
+                    // ── Error ────────────────────────────────────────────────
+                    errorMsg != null -> {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            androidx.compose.foundation.layout.Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(32.dp)
+                            ) {
+                                Text(text = "🐶", style = MaterialTheme.typography.displayMedium)
+                                androidx.compose.foundation.layout.Spacer(
+                                    modifier = Modifier.padding(top = 16.dp)
+                                )
+                                Text(
+                                    text      = errorMsg!!,
+                                    style     = MaterialTheme.typography.bodyLarge,
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                    color     = MaterialTheme.colorScheme.onBackground
+                                )
+                                androidx.compose.foundation.layout.Spacer(
+                                    modifier = Modifier.padding(top = 24.dp)
+                                )
+                                androidx.compose.material3.Button(
+                                    onClick = { retryKey++ },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp)
+                                ) {
+                                    Text("Try Again")
+                                }
+                                androidx.compose.foundation.layout.Spacer(
+                                    modifier = Modifier.padding(top = 8.dp)
+                                )
+                                androidx.compose.material3.OutlinedButton(
+                                    onClick  = { navController.popBackStack() },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp)
+                                ) {
+                                    Text("Go Back")
+                                }
+                            }
+                        }
+                    }
+                    // ── Success ──────────────────────────────────────────────
+                    else -> {
+                        ResultScreen(
+                            options          = decision.options,
+                            recommendation   = recommendation,
+                            onBack           = { navController.popBackStack() },
+                            onNavigateToChat = { navController.navigate("chat") }
+                        )
+                    }
                 }
             } else {
                 ResultScreen(

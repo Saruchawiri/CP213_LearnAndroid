@@ -9,5 +9,6 @@ sealed class AppError : Exception() {
     object NetworkError : AppError()
     object DatabaseError : AppError()
     object AiServiceUnavailable : AppError()
+    object RateLimitError : AppError()
     data class UnknownError(override val message: String?) : AppError()
 }

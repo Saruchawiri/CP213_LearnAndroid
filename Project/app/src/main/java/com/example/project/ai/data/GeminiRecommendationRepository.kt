@@ -11,6 +11,8 @@ import com.example.project.feature.decision.domain.Decision
 import com.example.project.feature.decision.domain.ProsCons
 import com.example.project.feature.decision.domain.Recommendation
 import org.json.JSONObject
+import retrofit2.HttpException
+import java.io.IOException
 
 class GeminiRecommendationRepository(
     private val geminiApiService: GeminiApiService,
@@ -72,6 +74,14 @@ Important: pros and cons must be real, specific insights about each option. The 
 
             parseRecommendation(rawText, decision)
 
+        } catch (e: HttpException) {
+            when (e.code()) {
+                429 -> Resource.Error(AppError.RateLimitError)
+                503, 502 -> Resource.Error(AppError.AiServiceUnavailable)
+                else -> Resource.Error(AppError.UnknownError("HTTP ${e.code()}: ${e.message()}"))
+            }
+        } catch (e: IOException) {
+            Resource.Error(AppError.NetworkError)
         } catch (e: Exception) {
             Resource.Error(AppError.UnknownError(e.message))
         }
