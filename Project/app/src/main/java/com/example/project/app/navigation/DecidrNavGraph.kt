@@ -43,7 +43,7 @@ import com.example.project.ui.screens.ResultScreen
 
 // ── Replace this with your Gemini API key ────────────────────────────────────
 // Get a free key at: https://aistudio.google.com/app/apikey
-private const val GEMINI_API_KEY = "AIzaSyAGRTevLjlVrvpFcfTUPu5ITNrbzC9NGXM"
+private const val GEMINI_API_KEY = "AIzaSyBn0XO_VcJbsDlcCI0x2cAdZNJZ-Zdq90E"
 
 @Composable
 fun DecidrNavGraph() {

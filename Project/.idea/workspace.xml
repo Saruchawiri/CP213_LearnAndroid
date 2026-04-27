@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ac61e23-a532-485c-93a8-e1893c13da6a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project/ai/data/GeminiRecommendationRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project/ai/data/GeminiRecommendationRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project/ai/data/remote/GeminiApiService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project/ai/data/remote/GeminiApiService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project/app/navigation/DecidrNavGraph.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project/app/navigation/DecidrNavGraph.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project/core/error/Resource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project/core/error/Resource.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
