@@ -61,6 +61,33 @@ class OfflineFirstDecisionRepository(
         }
     }
 
+    override suspend fun saveDecisionWithRecommendation(decision: Decision, recommendation: com.example.project.feature.decision.domain.Recommendation) {
+        saveDecision(decision)
+        val historyEntity = com.example.project.feature.decision.data.local.HistoryEntity(
+            decisionId = decision.id,
+            chosenOptionId = recommendation.recommendedOptionId,
+            confidenceScore = recommendation.confidenceScore,
+            reasoning = recommendation.reasoning,
+            completedAt = System.currentTimeMillis()
+        )
+        decidrDao.insertHistory(historyEntity)
+    }
+
+    override fun getDecisionHistory(): Flow<List<com.example.project.feature.decision.domain.DecisionHistoryItem>> {
+        return decidrDao.getAllDecisionsWithDetails().map { list ->
+            list.filter { it.history != null }.map { details ->
+                val history = details.history!!
+                val optionTitle = details.options.find { it.id == history.chosenOptionId }?.title ?: "Unknown"
+                com.example.project.feature.decision.domain.DecisionHistoryItem(
+                    decision = details.toDomainModel(),
+                    recommendedOptionTitle = optionTitle,
+                    reasoning = history.reasoning,
+                    timestamp = history.completedAt
+                )
+            }.sortedByDescending { it.timestamp }
+        }
+    }
+
     private fun DecisionWithDetails.toDomainModel(): Decision {
         return Decision(
             id = this.decision.id,

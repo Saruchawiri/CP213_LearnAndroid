@@ -7,10 +7,10 @@ import retrofit2.http.Query
 interface GeminiApiService {
 
     /**
-     * Gemini 2.0 Flash — generateContent endpoint.
+     * Gemini Flash Lite Latest — generateContent endpoint.
      * key = Gemini API key passed as query param.
      */
-    @POST("v1beta/models/gemini-2.0-flash:generateContent")
+    @POST("v1beta/models/gemini-flash-latest:generateContent")
     suspend fun generateContent(
         @Query("key") apiKey: String,
         @Body request: GeminiRequest

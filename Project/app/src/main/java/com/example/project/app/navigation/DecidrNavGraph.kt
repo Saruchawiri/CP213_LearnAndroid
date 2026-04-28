@@ -43,13 +43,27 @@ import com.example.project.ui.screens.ResultScreen
 
 // ── Replace this with your Gemini API key ────────────────────────────────────
 // Get a free key at: https://aistudio.google.com/app/apikey
-private const val GEMINI_API_KEY = "AIzaSyAGRTevLjlVrvpFcfTUPu5ITNrbzC9NGXM"
+private const val GEMINI_API_KEY = "AIzaSyBSPdCBoDq01D5jsG_apS0xPO2iaGDgL3I"
 
 @Composable
 fun DecidrNavGraph() {
 
     val navController  = rememberNavController()
     var currentDecision by remember { mutableStateOf<Decision?>(null) }
+
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val database = remember(context) {
+        androidx.room.Room.databaseBuilder(
+            context.applicationContext,
+            com.example.project.feature.decision.data.local.DecidrDatabase::class.java,
+            "decidr_database"
+        )
+        .fallbackToDestructiveMigration()
+        .build()
+    }
+    val decisionRepo = remember(database) {
+        com.example.project.feature.decision.data.OfflineFirstDecisionRepository(database.decidrDao)
+    }
 
     // Shared Gemini service instance
     val geminiService  = remember { GeminiClient.geminiApiService }
@@ -116,7 +130,11 @@ fun DecidrNavGraph() {
                     recommendation = null
                     errorMsg       = null
                     when (val result = recommendRepo.getRecommendation(decision)) {
-                        is Resource.Success -> recommendation = result.data
+                        is Resource.Success -> {
+                            recommendation = result.data
+                            // Save decision and recommendation to local database
+                            decisionRepo.saveDecisionWithRecommendation(decision, result.data)
+                        }
                         is Resource.Error   -> {
                             errorMsg = when (result.exception) {
                                 is AppError.RateLimitError ->
@@ -210,7 +228,10 @@ fun DecidrNavGraph() {
 
         // ── History ───────────────────────────────────────────────────────────
         composable("history") {
-            HistoryScreen(onBack = { navController.popBackStack() })
+            HistoryScreen(
+                onBack = { navController.popBackStack() },
+                decisionRepo = decisionRepo
+            )
         }
 
         // ── Chat — powered by Gemini ──────────────────────────────────────────

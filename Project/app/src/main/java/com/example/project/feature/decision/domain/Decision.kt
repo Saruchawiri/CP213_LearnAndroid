@@ -18,3 +18,10 @@ data class Factor(
     val name: String,
     val weight: Float // Typically 1.0 to 10.0 or 0.0 to 1.0
 )
+
+data class DecisionHistoryItem(
+    val decision: Decision,
+    val recommendedOptionTitle: String,
+    val reasoning: String,
+    val timestamp: Long
+)

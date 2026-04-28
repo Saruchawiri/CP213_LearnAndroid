@@ -42,6 +42,144 @@ AI-powered Decision Support Mobile Application
 - คนที่ตัดสินใจยาก (มีปัญหาเจอมักลังเลรักพี่เสียดายน้อง)
 - ผู้ที่สนใจเทคโนโลยี AI และ Productivity tools
 
+### 5.Decidr - UI Wireframes (Low-Fidelity)
+
+ 1. Main Screen (หน้าหลักสำหรับการป้อนข้อมูล)
+```text
++-----------------------------------------+
+|  10:00                           LTE [] |
++-----------------------------------------+
+|                                         |
+|              [🐶 Jelly]                 |
+|     "Hi! What are we deciding today?"   |
+|                                         |
+|  [ Your Question                      ] |
+|  [ e.g., Where should we eat?         ] |
+|                                         |
+|  Options:                               |
+|  [ Option 1: Sushi                  ] ✕ |
+|  [ Option 2: Burger                 ] ✕ |
+|  + Add Option                           |
+|                                         |
+|  [ 🟢 ] Advanced Mode (Factors)         |
+|  -------------------------------------  |
+|  [ Factor: Price                    ] ✕ |
+|  Weight: -----O-----------------        |
+|                                         |
+|  [ Factor: Taste                    ] ✕ |
+|  Weight: -------------O---------        |
+|  + Add Factor                           |
+|                                         |
+|                                         |
+|     ===============================     |
+|     |       DECIDE FOR ME!        |     |
+|     ===============================     |
+|                                         |
+|     [ View History ]                    |
++-----------------------------------------+
+```
+
+ 2. Result Screen (หน้าแสดงผลลัพธ์การตัดสินใจ)
+```text
++-----------------------------------------+
+|  <-   Decision Result                   |
++-----------------------------------------+
+|               [🐶 Jelly]                |
+|  "I've thought about it carefully..."   |
+|                                         |
+|   +---------------------------------+   |
+|   |         🏆 Jelly's Pick         |   |
+|   |              Sushi              |   |
+|   +---------------------------------+   |
+|                                         |
+|  Jelly's Confidence                     |
+|   +---------------------------------+   |
+|   | Very confident              85% |   |
+|   | [██████████████████░░░░░░░]     |   |
+|   +---------------------------------+   |
+|                                         |
+|  Why Sushi?                             |
+|  "Sushi offers the best balance of      |
+|  taste and location based on..."        |
+|                                         |
+|  Score Comparison:                      |
+|   🏆 Sushi      [████████████░░] 85/100 |
+|      Burger     [████████░░░░░░] 60/100 |
+|                                         |
+|  Option Breakdown:                      |
+|   🏆 Sushi (85)                         |
+|      ✅ Pros: Healthy, Delicious        |
+|      ⚠️ Cons: Expensive                 |
+|                                         |
+|      [ 👍 ]                 [ 👎 ]      |
+|                                         |
+|    ===============================      |
+|    |      💬 CHAT WITH JELLY     |      |
+|    ===============================      |
++-----------------------------------------+
+```
+
+ 3. Chat Screen (หน้าสำหรับสนทนาต่อยอด)
+```text
++-----------------------------------------+
+|  <-   Chat with Jelly                   |
++-----------------------------------------+
+|                                         |
+|                                         |
+| +-------------------------------------+ |
+| | [🐶 Jelly]                          | |
+| | I suggested Sushi because it aligns | |
+| | with your 'Taste' factor mostly!    | |
+| +-------------------------------------+ |
+|                                         |
+|               +-----------------------+ |
+|               | But I'm on a budget!  | |
+|               | Can we eat cheaper?   | |
+|               +-----------------------+ |
+|                                         |
+| +-------------------------------------+ |
+| | [🐶 Jelly]                          | |
+| | Got it! If budget is the primary    | |
+| | concern, Burger is a solid choice   | |
+| | at roughly $5. Want me to switch?   | |
+| +-------------------------------------+ |
+|                                         |
+|                                         |
+|                                         |
+|  +-----------------------------------+  |
+|  | Type message...               [>] |  |
+|  +-----------------------------------+  |
++-----------------------------------------+
+```
+
+ 4. History Screen (หน้าประวัติ)
+```text
++-----------------------------------------+
+|  <-   History                           |
++-----------------------------------------+
+|                                         |
+|  +-----------------------------------+  |
+|  | Q: Where should we eat?           |  |
+|  | Winner: Sushi (85%)         [ 👍 ]|  |
+|  | Date: 12 Oct 2026                 |  |
+|  +-----------------------------------+  |
+|                                         |
+|  +-----------------------------------+  |
+|  | Q: Which laptop to buy?           |  |
+|  | Winner: MacBook Pro (90%)         |  |
+|  | Date: 10 Oct 2026                 |  |
+|  +-----------------------------------+  |
+|                                         |
+|  +-----------------------------------+  |
+|  | Q: Beach or Mountain trip?        |  |
+|  | Winner: Beach (75%)         [ 👎 ]|  |
+|  | Date: 05 Oct 2026                 |  |
+|  +-----------------------------------+  |
+|                                         |
++-----------------------------------------+
+```
+
+
 ⸻
 
 ## Step 2: Tech Stack
@@ -50,7 +188,7 @@ AI-powered Decision Support Mobile Application
 - **UI:** Jetpack Compose, Material 3, Native Animations
 - **Architecture:** MVVM, Clean Architecture (Presentation, Domain, Data)
 - **Database:** Room Database (Offline-first local storage)
-- **AI:** Google Gemini 2.0 Flash API (via Retrofit & OkHttp)
+- **AI:** Google Gemini Flash API (via Retrofit & OkHttp)
 - **Design:** Pastel UI + Mascot-driven UX (น้องหมา Jelly)
 
 ⸻
@@ -82,7 +220,7 @@ AI-powered Decision Support Mobile Application
 - **Decision:** id, query, options, factors, created_at
 - **Option:** id, decision_id, title, score, pros, cons
 - **Factor:** id, decision_id, name, weight
-- **History:** บันทึกโครงสร้างการผลการวิเคราะห์
+- **History:** id, decision_id, chosen_option_id, confidence_score, reasoning, completed_at, is_liked
 
 ⸻
 
@@ -109,3 +247,59 @@ AI-powered Decision Support Mobile Application
 - ปลดล็อกความเข้าใจการเชื่อมต่อ AI Integration ขั้นสูง (ผ่าน JSON แตกเป็น Object)
 - ได้ Portfolio ระดับสูง และผลงานชิ้นเอก 30% ของรายวิชาที่มี Wow Factor
 - แสดงความสามารถด้าน Product Thinking & UX/UI Design
+
+⸻
+
+## Step 7: Installation Guide (วิธีการติดตั้งแอปพลิเคชัน)
+
+หากต้องการนำโปรเจ็กต์นี้ไปรันบนเครื่องของคุณ สามารถทำตามขั้นตอนต่อไปนี้ได้เลย:
+
+1. **Clone Repository:**
+   ```bash
+   git clone https://github.com/[your-username]/CP213_LearnAndroid.git
+   ```
+2. **เปิดด้วย Android Studio:**
+   เปิดโปรแกรม Android Studio และเลือก `Open` นำทางไปยังโฟลเดอร์ `Project`
+3. **ตั้งค่า API Key ของ Gemini (สำคัญ):**
+   - ไปที่เว็บไซต์ [Google AI Studio](https://aistudio.google.com/app/apikey) เพื่อสร้าง API Key ของตัวเอง
+   - เปิดไฟล์ `app/src/main/java/com/example/project/app/navigation/DecidrNavGraph.kt`
+   - ค้นหาตัวแปร `GEMINI_API_KEY` และนำ API Key ของคุณมาใส่แทนที่
+4. **Sync Project กับ Gradle Files:**
+   กดปุ่มรูปช้าง (Sync Project) ที่มุมขวาบน เพื่อดาวน์โหลด Dependencies ที่จำเป็นทั้งหมด
+5. **รันแอปพลิเคชัน:**
+   เสียบสายสมาร์ทโฟน Android หรือเปิด Emulator แล้วกดปุ่ม **Play (Run 'app')** ด้านบน
+
+⸻
+
+## Step 8: Project Structure (โครงสร้างไฟล์ในโปรเจ็กต์)
+
+โปรเจ็กต์นี้ใช้โครงสร้างแบบ **Clean Architecture** ร่วมกับการแบ่งโฟลเดอร์ตาม Feature-based ทำให้โค้ดเป็นระเบียบและง่ายต่อการดูแล:
+
+```text
+com.example.project
+│
+├── MainActivity.kt        # Entry point หลักของแอป ควบคุม Theme และ Navigation
+│
+├── ai/                    # ส่วนจัดการระบบ AI (Gemini) ทั้งหมด
+│   ├── data/              # Repository 구현 (เรียก API ด้วย Retrofit)
+│   ├── domain/            # Interface และ Use Case สำหรับระบบ AI แนะนำและแชท
+│   └── remote/            # ไฟล์ DTO (Data Transfer Object) ของ API, Model
+│
+├── app/                   # ส่วนโครงสร้างแกนกลางของแอป
+│   └── navigation/        # ระบบ Navigation Graph ควบคุมการเปลี่ยนหน้าทั้งหมด
+│
+├── core/                  # ชุดเครื่องมือส่วนกลาง (Utilities & Base)
+│   └── error/             # โมเดลจัดการ Error (Network, API Limit, etc.)
+│
+├── feature/               # ฟีเจอร์หลักของแอป (แยกย่อยตาม Domain)
+│   ├── chat/              # ฟีเจอร์ Chat (UI, Domain) สำหรับสนทนากับ Jelly
+│   ├── decision/          # ฟีเจอร์หลัก (Main & Result Screen, Logic คำนวณคะแนน)
+│   │   ├── data/          # Offline First Repository & Room Database (Dao, Entity)
+│   │   ├── domain/        # Domain Models (Decision, Option, Factor)
+│   │   └── ui/            # Compose UI สำหรับ Main และ Result
+│   └── history/           # ฟีเจอร์แสดงประวัติการตัดสินใจ
+│       └── ui/            # Compose UI หน้า History
+│
+└── ui/                    # การตั้งค่า UI ระดับโกลบอล
+    └── theme/             # Material 3 Theme (Color, Typography, Shape)
+```
