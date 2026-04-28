@@ -9,4 +9,6 @@
         <!-- Set the theme to switch to once the splash screen is dismissed -->
         <item name="postSplashScreenTheme">@style/Theme.Project</item>
     </style>
+
+    <style name="Theme.MyApplication" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
